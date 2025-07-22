@@ -1,0 +1,32 @@
+services:
+  mf-characters:
+    build:
+      context: ./MF-Characters
+    ports:
+      - "4174:80"
+    networks:
+      - microfrontends
+
+  mf-character-detail:
+    build:
+      context: ./MF-CharacterDetail
+    ports:
+      - "4173:80"
+    networks:
+      - microfrontends
+
+
+  app-host:
+    build:
+      context: ./MF-Shell
+    ports:
+      - "3000:80"
+    networks:
+      - microfrontends
+    depends_on:
+      - mf-characters
+      - mf-character-detail
+
+networks:
+  microfrontends:
+    driver: bridge
